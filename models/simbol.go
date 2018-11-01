@@ -14,13 +14,13 @@ type Simbol struct {
 }
 
 // NewSimbol should return a new instance of simbol
-func NewSimbol(value string) (simbol, error) {
+func NewSimbol(value string) (Simbol, error) {
 	if len(value) != 1 {
-		errorMessage := fmt.Sprintf("A simbol '%s' can not have a length different from 1", value)
-		return simbol{}, errors.New(errorMessage)
+		errorMessage := fmt.Sprintf("A Simbol '%s' can not have a length different from 1", value)
+		return Simbol{}, errors.New(errorMessage)
 	}
 
-	return simbol{
+	return Simbol{
 		Value:      value,
 		IsVariable: value == strings.ToUpper(value),
 	}, nil
