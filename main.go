@@ -1,12 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+
+	"./parser"
+)
 
 func main() {
-	a := "a"
-	A := "A"
-
-	fmt.Println(a == "a")
-	fmt.Println(A == "A")
-	fmt.Println(a == A)
+	ex, err := parser.NewTrasformation("A -> ab")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(ex)
 }
