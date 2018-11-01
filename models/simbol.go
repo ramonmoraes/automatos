@@ -6,7 +6,9 @@ import (
 	"strings"
 )
 
-type simbol struct {
+// Simbol should be the base struct of the program
+// but it should always be initiated with the NewSimbol func
+type Simbol struct {
 	Value      string
 	IsVariable bool
 }
