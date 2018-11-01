@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -10,10 +11,11 @@ type simbol struct {
 	IsVariable bool
 }
 
-// New should return a new instance of simbol
-func New(value string) (simbol, error) {
+// NewSimbol should return a new instance of simbol
+func NewSimbol(value string) (simbol, error) {
 	if len(value) != 1 {
-		return simbol{}, errors.New("A simbol can not have a length different from 1")
+		errorMessage := fmt.Sprintf("A simbol '%s' can not have a length different from 1", value)
+		return simbol{}, errors.New(errorMessage)
 	}
 
 	return simbol{
