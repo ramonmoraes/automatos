@@ -1,4 +1,4 @@
-package simbol
+package models
 
 import (
 	"errors"
