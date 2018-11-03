@@ -1,16 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"./parser"
 )
 
 func main() {
-	ex, err := parser.NewExpression("A -> ab")
+	ex, err := parser.NewExpression("A -> aB | a")
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(ex)
+	ex.Explain()
 }

@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"strings"
 
 	"../models"
@@ -34,4 +35,17 @@ func NewExpression(expression string) (Expression, error) {
 		Creator:   creator,
 		Generated: wordList,
 	}, nil
+}
+
+// Explain should only print a information of what the expression resulted
+func (e *Expression) Explain() {
+	words := []string{}
+	for _, word := range e.Generated {
+		words = append(words, word.ToString())
+	}
+	fmt.Println("Explaining:")
+	fmt.Printf(
+		"The variable %s, may generate the word(s) '%s'\n",
+		e.Creator.Value, strings.Join(words, " or "),
+	)
 }
