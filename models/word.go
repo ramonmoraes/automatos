@@ -24,3 +24,12 @@ func NewWord(word string) Word {
 	}
 	return newWord
 }
+
+// ToString should return a the word's string value
+func (w *Word) ToString() string {
+	arr := []string{}
+	for _, symbol := range w.Simbols {
+		arr = append(arr, symbol.Value)
+	}
+	return strings.Join(arr, "")
+}
