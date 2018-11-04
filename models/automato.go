@@ -1,6 +1,9 @@
 package models
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 // Automato should be a list of expressions
 // It can be created with NewAutomato method or normally
@@ -21,5 +24,13 @@ func NewAutomato(expressionStringList []string) Automato {
 	}
 	return Automato{
 		Expressions: expressionList,
+	}
+}
+
+// Explain should call explain for every expression in automato
+func (a *Automato) Explain() {
+	fmt.Println("Explaining Automato:")
+	for _, expression := range a.Expressions {
+		expression.Explain()
 	}
 }

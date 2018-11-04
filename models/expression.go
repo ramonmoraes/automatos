@@ -41,7 +41,6 @@ func (e *Expression) Explain() {
 	for _, word := range e.Generated {
 		words = append(words, word.ToString())
 	}
-	fmt.Println("Explaining:")
 	fmt.Printf(
 		"The variable %s, may generate the word(s) '%s'\n",
 		e.Creator.Value, strings.Join(words, " or "),
