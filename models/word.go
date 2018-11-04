@@ -26,25 +26,35 @@ func NewWord(word string) Word {
 }
 
 // ContainsVariable should return a list of variables on the word
-func (w *Word) ContainsVariable() ([]Simbol, bool) {
+func (w *Word) ContainsVariable() bool {
+	return len(w.GetVariables()) != 0
+}
+
+// GetVariables should return a list of variables on the word
+func (w *Word) GetVariables() []Simbol {
 	varList := []Simbol{}
 	for _, simb := range w.Simbols {
 		if simb.IsVariable {
 			varList = append(varList, simb)
 		}
 	}
-	return []Simbol{}, len(varList) == 0
+	return []Simbol{}
 }
 
 // ContainsTerminals should return a list of non-variables on the word
-func (w *Word) ContainsTerminals() ([]Simbol, bool) {
+func (w *Word) ContainsTerminals() bool {
+	return len(w.GetTerminals()) != 0
+}
+
+// GetTerminals should return a list of non-variables on the word
+func (w *Word) GetTerminals() []Simbol {
 	terminalList := []Simbol{}
 	for _, simb := range w.Simbols {
 		if !simb.IsVariable {
 			terminalList = append(terminalList, simb)
 		}
 	}
-	return []Simbol{}, len(terminalList) == 0
+	return []Simbol{}
 }
 
 // ToString should return a the word's string value
