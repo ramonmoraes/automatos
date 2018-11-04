@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-func testCreateExpression(t *testing.T) {
-	ex, err := NewExpression("A -> ab")
+func TestCreateExpression(t *testing.T) {
+	ex, err := NewExpression("A -> ab | a")
 	if err != nil {
 		t.Error("NewExpression should not have err")
 	}
@@ -19,6 +19,6 @@ func testCreateExpression(t *testing.T) {
 	}
 
 	if len(generated) != 2 {
-		t.Error("NewExpression have generated with len of 2")
+		t.Error("NewExpression have generated with len of 1")
 	}
 }
