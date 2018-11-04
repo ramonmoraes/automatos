@@ -25,8 +25,8 @@ func NewWord(word string) Word {
 	return newWord
 }
 
-// ContainsVariable should return a list of variables on the word
-func (w *Word) ContainsVariable() bool {
+// ContainVariable should return a list of variables on the word
+func (w *Word) ContainVariable() bool {
 	return len(w.GetVariables()) != 0
 }
 
@@ -41,8 +41,8 @@ func (w *Word) GetVariables() []Simbol {
 	return []Simbol{}
 }
 
-// ContainsTerminals should return a list of non-variables on the word
-func (w *Word) ContainsTerminals() bool {
+// ContainTerminal should return a list of non-variables on the word
+func (w *Word) ContainTerminal() bool {
 	return len(w.GetTerminals()) != 0
 }
 
