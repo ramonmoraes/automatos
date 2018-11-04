@@ -38,7 +38,7 @@ func (w *Word) GetVariables() []Simbol {
 			varList = append(varList, simb)
 		}
 	}
-	return []Simbol{}
+	return varList
 }
 
 // ContainTerminal should return a list of non-variables on the word
@@ -54,7 +54,7 @@ func (w *Word) GetTerminals() []Simbol {
 			terminalList = append(terminalList, simb)
 		}
 	}
-	return []Simbol{}
+	return terminalList
 }
 
 // ToString should return a the word's string value
