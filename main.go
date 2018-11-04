@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	"./parser"
+	"./models"
 )
 
 func main() {
-	ex, err := parser.NewExpression("A -> aB | a")
+	ex, err := models.NewExpression("A -> aB | a")
 	if err != nil {
 		log.Fatal(err)
 	}
