@@ -1,15 +1,22 @@
 package main
 
 import (
-	"log"
+	"fmt"
 
 	"./models"
+	"./solver"
 )
 
 func main() {
-	ex, err := models.NewExpression("A -> aB | a")
-	if err != nil {
-		log.Fatal(err)
-	}
-	ex.Explain()
+	at := models.NewAutomato([]string{"A -> aB | a", "B -> E", "E -> c | 0"})
+	sim := at.GetPossibleCreatedsSimbols()
+	fmt.Println(sim)
+
+	anotherAt := solver.UselessSimbol(at)
+	fmt.Println(anotherAt)
+	// valList := []string{}
+	// for _, simbol := range sim {
+	// 	valList = append(valList, simbol.Value)
+	// }
+	// fmt.Println(valList)
 }
