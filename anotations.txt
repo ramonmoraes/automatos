@@ -1,0 +1,2 @@
+BNF: Backus Naur Form
+Maneira usual de representar uma GLC ( Gramatica livre de contexto )
