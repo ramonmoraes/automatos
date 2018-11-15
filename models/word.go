@@ -50,7 +50,7 @@ func (w *Word) ContainTerminal() bool {
 func (w *Word) GetTerminals() []Simbol {
 	terminalList := []Simbol{}
 	for _, simb := range w.Simbols {
-		if !simb.IsVariable {
+		if !simb.IsVariable && !simb.IsEmpty {
 			terminalList = append(terminalList, simb)
 		}
 	}
@@ -64,4 +64,9 @@ func (w *Word) ToString() string {
 		arr = append(arr, symbol.Value)
 	}
 	return strings.Join(arr, "")
+}
+
+// IsEmpty should return if the word contains only one empty simbol
+func (w *Word) IsEmpty() bool {
+	return !w.ContainVariable() && !w.ContainTerminal()
 }

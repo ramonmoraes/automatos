@@ -25,3 +25,15 @@ func TestVariableFunction(t *testing.T) {
 		t.Error("Expected 'w' to not have Variable")
 	}
 }
+
+func TestIsEmpty(t *testing.T) {
+	w := NewWord("a0")
+	if w.IsEmpty() {
+		t.Error("Word a0 should not be empty")
+	}
+
+	w = NewWord("0")
+	if !w.IsEmpty() {
+		t.Error("Word 0 should be empty")
+	}
+}
