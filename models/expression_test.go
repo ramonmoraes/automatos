@@ -11,7 +11,7 @@ func TestCreateExpression(t *testing.T) {
 	}
 
 	creator := ex.Creator
-	generated := ex.Generated
+	generated := ex.Words
 	print(generated)
 
 	if creator.Value != "A" {

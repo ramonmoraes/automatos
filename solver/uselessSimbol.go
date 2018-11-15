@@ -8,7 +8,7 @@ import (
 func UselessSimbol(automato models.Automato) models.Automato {
 	validExpressionList := []models.Expression{}
 	for _, expr := range automato.Expressions {
-		for _, word := range expr.Generated {
+		for _, word := range expr.Words {
 			if word.ContainTerminal() {
 				validExpressionList = append(validExpressionList, expr)
 			}

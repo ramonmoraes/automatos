@@ -8,8 +8,8 @@ import (
 // Expression should be our base struct for using in expressions
 // But it should be created with NewExpression func
 type Expression struct {
-	Creator   Simbol
-	Generated []Word
+	Creator Simbol
+	Words   []Word
 }
 
 // NewExpression should receive a string and return a Expression expression
@@ -30,15 +30,15 @@ func NewExpression(expression string) (Expression, error) {
 	}
 
 	return Expression{
-		Creator:   creator,
-		Generated: wordList,
+		Creator: creator,
+		Words:   wordList,
 	}, nil
 }
 
 // Explain should only print a information of what the expression resulted
 func (e *Expression) Explain() {
 	words := []string{}
-	for _, word := range e.Generated {
+	for _, word := range e.Words {
 		words = append(words, word.ToString())
 	}
 	fmt.Printf(

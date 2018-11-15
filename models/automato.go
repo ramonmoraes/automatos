@@ -40,7 +40,7 @@ func (a *Automato) GetVariableList() []Simbol {
 func (a *Automato) GetPossibleCreatedsSimbols() []Simbol {
 	wordList := []Word{}
 	for _, expression := range a.Expressions {
-		wordList = append(wordList, expression.Generated...)
+		wordList = append(wordList, expression.Words...)
 	}
 
 	simbolList := []Simbol{}
