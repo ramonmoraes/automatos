@@ -4,6 +4,7 @@ import (
 	"../models"
 )
 
+// UselessSimbol should remove every useless simbol
 func UselessSimbol(automato models.Automato) models.Automato {
 	validExpressionList := []models.Expression{}
 	for _, expr := range automato.Expressions {
