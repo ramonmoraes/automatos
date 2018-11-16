@@ -8,7 +8,7 @@ import (
 // Automato should be a list of expressions
 // It can be created with NewAutomato method or normally
 type Automato struct {
-	Expressions []Expression
+	Expressions map[Simbol][]Word
 }
 
 // NewAutomato should create an Automato parsing the string equations given
@@ -22,6 +22,7 @@ func NewAutomato(expressionStringList []string) Automato {
 
 		expressionList = append(expressionList, expression)
 	}
+
 	return Automato{
 		Expressions: expressionList,
 	}
