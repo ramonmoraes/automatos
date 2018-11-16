@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"log"
+	"strings"
 )
 
 // Automato should be a list of expressions
@@ -13,53 +14,43 @@ type Automato struct {
 
 // NewAutomato should create an Automato parsing the string equations given
 func NewAutomato(expressionStringList []string) Automato {
-	expressionList := []Expression{}
+	expressionMap := make(map[Simbol][]Word)
 	for _, expressionString := range expressionStringList {
-		expression, err := NewExpression(expressionString)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		expressionList = append(expressionList, expression)
+		simbol, word := newExpression(expressionString)
+		expressionMap[simbol] = word
 	}
 
 	return Automato{
-		Expressions: expressionList,
+		Expressions: expressionMap,
 	}
 }
 
-// GetVariableList should return the list of every possible variables on automato
-func (a *Automato) GetVariableList() []Simbol {
-	varList := []Simbol{}
-	for _, expression := range a.Expressions {
-		varList = append(varList, expression.Variable)
-	}
-	return varList
-}
+func newExpression(expression string) (Simbol, []Word) {
+	splited := strings.Split(expression, "->")
+	creator, err := NewSimbol(strings.TrimSpace(splited[0]))
 
-// GetPossibleCreatedsSimbols should return the list of every simbol that can be created
-func (a *Automato) GetPossibleCreatedsSimbols() []Simbol {
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	generatedList := strings.Split(strings.TrimSpace(splited[1]), "|")
 	wordList := []Word{}
-	for _, expression := range a.Expressions {
-		wordList = append(wordList, expression.Words...)
+
+	for _, word := range generatedList {
+		wordList = append(wordList, NewWord(word))
 	}
 
-	simbolList := []Simbol{}
-	for _, word := range wordList {
-		simbolList = append(simbolList, word.Simbols...)
-	}
-	return simbolList
+	return creator, wordList
 }
 
-// GetEverySimbol should return the list of every possible variables on automato
-func (a *Automato) GetEverySimbol() []Simbol {
-	return append(a.GetVariableList(), a.GetPossibleCreatedsSimbols()...)
-}
-
-// Explain should call explain for every expression in automato
+// Explain should describe each automato's expression
 func (a *Automato) Explain() {
-	fmt.Println("Explaining Automato:")
-	for _, expression := range a.Expressions {
-		expression.Explain()
+	fmt.Println("Explaining automato:")
+	for simbol, words := range a.Expressions {
+		explainedWords := []string{}
+		for _, word := range words {
+			explainedWords = append(explainedWords, word.ToString())
+		}
+		fmt.Printf("%s -> %s\n", simbol.Value, strings.Join(explainedWords, " | "))
 	}
 }
