@@ -1,2 +1,5 @@
+https://www.youtube.com/watch?v=juo5WmTJn5E
+http://www2.ic.uff.br/~ueverton/files/LF/aula06.pdf
+
 BNF: Backus Naur Form
 Maneira usual de representar uma GLC ( Gramatica livre de contexto )
