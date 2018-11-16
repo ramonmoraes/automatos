@@ -31,7 +31,7 @@ func NewAutomato(expressionStringList []string) Automato {
 func (a *Automato) GetVariableList() []Simbol {
 	varList := []Simbol{}
 	for _, expression := range a.Expressions {
-		varList = append(varList, expression.Creator)
+		varList = append(varList, expression.Variable)
 	}
 	return varList
 }

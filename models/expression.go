@@ -8,8 +8,8 @@ import (
 // Expression should be our base struct for using in expressions
 // But it should be created with NewExpression func
 type Expression struct {
-	Creator Simbol
-	Words   []Word
+	Variable Simbol
+	Words    []Word
 }
 
 // NewExpression should receive a string and return a Expression expression
@@ -30,8 +30,8 @@ func NewExpression(expression string) (Expression, error) {
 	}
 
 	return Expression{
-		Creator: creator,
-		Words:   wordList,
+		Variable: creator,
+		Words:    wordList,
 	}, nil
 }
 
@@ -43,6 +43,6 @@ func (e *Expression) Explain() {
 	}
 	fmt.Printf(
 		"The variable %s, may generate the word(s) '%s'\n",
-		e.Creator.Value, strings.Join(words, " or "),
+		e.Variable.Value, strings.Join(words, " or "),
 	)
 }

@@ -10,7 +10,7 @@ func TestCreateExpression(t *testing.T) {
 		t.Error("NewExpression should not have err")
 	}
 
-	creator := ex.Creator
+	creator := ex.Variable
 	generated := ex.Words
 	print(generated)
 
