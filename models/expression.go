@@ -1,25 +1,18 @@
 package models
 
 import (
-	"fmt"
+	"log"
 	"strings"
 )
 
-// Expression should be our base struct for using in expressions
-// But it should be created with NewExpression func
-type Expression struct {
-	Variable Simbol
-	Words    []Word
-}
-
 // NewExpression should receive a string and return a Expression expression
 // of which simbol generates which
-func NewExpression(expression string) (Expression, error) {
+func NewExpression(expression string) (Simbol, []Word) {
 	splited := strings.Split(expression, "->")
 	creator, err := NewSimbol(strings.TrimSpace(splited[0]))
 
 	if err != nil {
-		return Expression{}, err
+		log.Fatal(err)
 	}
 
 	generatedList := strings.Split(strings.TrimSpace(splited[1]), "|")
@@ -29,20 +22,17 @@ func NewExpression(expression string) (Expression, error) {
 		wordList = append(wordList, NewWord(word))
 	}
 
-	return Expression{
-		Variable: creator,
-		Words:    wordList,
-	}, nil
+	return creator, wordList
 }
 
 // Explain should only print a information of what the expression resulted
-func (e *Expression) Explain() {
-	words := []string{}
-	for _, word := range e.Words {
-		words = append(words, word.ToString())
-	}
-	fmt.Printf(
-		"The variable %s, may generate the word(s) '%s'\n",
-		e.Variable.Value, strings.Join(words, " or "),
-	)
-}
+// func (e *Expression) Explain() {
+// 	words := []string{}
+// 	for _, word := range e.Words {
+// 		words = append(words, word.ToString())
+// 	}
+// 	fmt.Printf(
+// 		"The variable %s, may generate the word(s) '%s'\n",
+// 		e.Variable.Value, strings.Join(words, " or "),
+// 	)
+// }
