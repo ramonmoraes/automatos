@@ -6,22 +6,39 @@ import (
 
 // RemoveEmptyProductions should remove every expression that generates empty word
 func RemoveEmptyProductions(automato models.Automato) models.Automato {
-	nonEmptyProductions := []models.Expression{}
-	emptyProductions := []models.Expression{}
+	nonEmptyProductions := make(map[models.Simbol][]models.Word)
+	emptyProductions := make(map[models.Simbol][]models.Word)
 
-	for _, expression := range automato.Expressions {
-		for _, word := range expression.Words {
+	for variable, words := range automato.Expressions {
+		isEmpty := false
+
+		for _, word := range words {
 			if word.IsEmpty() {
-				emptyProductions = append(emptyProductions, expression)
+				isEmpty = true
+			}
+		}
+
+		if isEmpty {
+			emptyProductions[variable] = words
+		} else {
+			nonEmptyProductions[variable] = words
+		}
+	}
+
+	atWithoutEmptyProductions := models.Automato{
+		Expressions: nonEmptyProductions,
+	}
+
+	for emptyProductionVar, contentFromEmptyVar := range emptyProductions {
+		for _, wordsToBeAppendedWithEmptyVarContent := range atWithoutEmptyProductions.Expressions {
+			for _, word := range wordsToBeAppendedWithEmptyVarContent {
+				if word.Contains(emptyProductionVar) {
+					nw := word.ReplaceWords(emptyProductionVar, contentFromEmptyVar)
+					wordsToBeAppendedWithEmptyVarContent = append(wordsToBeAppendedWithEmptyVarContent, nw...)
+				}
 			}
 		}
 	}
 
-	for _, expression := range emptyProductions {
-		variable := expression.Variable
-	}
-
-	return models.Automato{
-		Expressions: nonEmptyProductions,
-	}
+	return atWithoutEmptyProductions
 }

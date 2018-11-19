@@ -18,8 +18,9 @@ func TestRemoveSimpleEmptyProduction(t *testing.T) {
 func TestRemoveDoubleEmptyProduction(t *testing.T) {
 	at := models.NewAutomato([]string{"A -> a|B", "B -> c | 0"})
 	atModified := RemoveEmptyProductions(at)
+
 	if len(atModified.Expressions) != 2 {
-		t.Error("Automato should have only one expression")
+		t.Error("Automato should have appended B content on A variable")
 		atModified.Explain()
 	}
 }
