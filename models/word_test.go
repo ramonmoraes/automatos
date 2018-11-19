@@ -98,3 +98,19 @@ func TestReplace3(t *testing.T) {
 		t.Log(w.ToString())
 	}
 }
+
+func TestReplace(t *testing.T) {
+	w := NewWord("aBc")
+	w2 := NewWord("d")
+	w3 := NewWord("eF")
+
+	initial, _ := NewSimbol("B")
+	nw := w.ReplaceWords(initial, []Word{w2, w3})
+	if len(nw) != 2 {
+		t.Error("ReplaceWords shoudl return 2 words")
+	}
+
+	if nw[0].ToString() != "adc" || nw[1].ToString() != "aeFc" {
+		t.Error("ReplaceWords should replace simbols correctly")
+	}
+}

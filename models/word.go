@@ -89,6 +89,23 @@ func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) {
 	w.Simbols = NewWord(newString).Simbols
 }
 
+// ReplaceWords should return words replacing the original simbol:first param
+// for the new simbols:second param
+// Entrada:
+// A -> a | aB
+// B -> D | E
+// Saida:
+// A -> a | aD | AE
+func (w *Word) ReplaceWords(originalSimbol Simbol, words []Word) []Word {
+	wordList := []Word{}
+	for _, word := range words {
+		refWord := *w
+		refWord.Replace(originalSimbol, word.Simbols)
+		wordList = append(wordList, refWord)
+	}
+	return wordList
+}
+
 // Contains should return if the word contains the simbol
 func (w *Word) Contains(simbol Simbol) bool {
 	for _, s := range w.Simbols {
