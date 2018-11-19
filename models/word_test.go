@@ -99,7 +99,7 @@ func TestReplace3(t *testing.T) {
 	}
 }
 
-func TestReplace(t *testing.T) {
+func TestReplaceWords(t *testing.T) {
 	w := NewWord("aBc")
 	w2 := NewWord("d")
 	w3 := NewWord("eF")
@@ -112,5 +112,8 @@ func TestReplace(t *testing.T) {
 
 	if nw[0].ToString() != "adc" || nw[1].ToString() != "aeFc" {
 		t.Error("ReplaceWords should replace simbols correctly")
+		for _, word := range nw {
+			t.Log(word.ToString())
+		}
 	}
 }

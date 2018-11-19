@@ -99,8 +99,7 @@ func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) Word {
 func (w *Word) ReplaceWords(originalSimbol Simbol, words []Word) []Word {
 	wordList := []Word{}
 	for _, word := range words {
-		refWord := *w
-		refWord.Replace(originalSimbol, word.Simbols)
+		refWord := w.Replace(originalSimbol, word.Simbols)
 		wordList = append(wordList, refWord)
 	}
 	return wordList
