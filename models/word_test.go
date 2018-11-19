@@ -49,12 +49,12 @@ func TestReplace1(t *testing.T) {
 		simbolList = append(simbolList, simb)
 	}
 
-	w.Replace(initial, simbolList)
-	if len(w.Simbols) != 3 {
+	nw := w.Replace(initial, simbolList)
+	if len(nw.Simbols) != 3 {
 		t.Error("Should replace simbols correctly")
 	}
 
-	if w.ToString() != "adF" {
+	if nw.ToString() != "adF" {
 		t.Error("Word should be adF")
 	}
 }
@@ -68,14 +68,14 @@ func TestReplace2(t *testing.T) {
 		simbolList = append(simbolList, simb)
 	}
 
-	w.Replace(initial, simbolList)
-	if len(w.Simbols) != 4 {
+	nw := w.Replace(initial, simbolList)
+	if len(nw.Simbols) != 4 {
 		t.Error("Should replace simbols correctly")
 	}
 
-	if w.ToString() != "adFc" {
+	if nw.ToString() != "adFc" {
 		t.Error("Word should be adFc")
-		t.Log(w.ToString())
+		t.Log(nw.ToString())
 	}
 }
 
@@ -88,14 +88,14 @@ func TestReplace3(t *testing.T) {
 		simbolList = append(simbolList, simb)
 	}
 
-	w.Replace(initial, simbolList)
-	if len(w.Simbols) != 5 {
+	nw := w.Replace(initial, simbolList)
+	if len(nw.Simbols) != 5 {
 		t.Error("Should replace simbols correctly")
 	}
 
-	if w.ToString() != "eeeeB" {
+	if nw.ToString() != "eeeeB" {
 		t.Error("Word should be eeeeB")
-		t.Log(w.ToString())
+		t.Log(nw.ToString())
 	}
 }
 

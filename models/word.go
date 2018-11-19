@@ -71,9 +71,9 @@ func (w *Word) IsEmpty() bool {
 	return !w.ContainVariable() && !w.ContainTerminal()
 }
 
-// Replace should mutate the original word replacing the original simbol:first param
+// Replace should return a new word replacing the original simbol:first param
 // for the new simbols:second param
-func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) {
+func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) Word {
 	var newWord string
 	for _, simbol := range newSimbols {
 		newWord += simbol.Value
@@ -86,7 +86,7 @@ func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) {
 		-1,
 	)
 
-	w.Simbols = NewWord(newString).Simbols
+	return NewWord(newString)
 }
 
 // ReplaceWords should return words replacing the original simbol:first param
