@@ -1,6 +1,8 @@
 package models
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestVariablesFunction(t *testing.T) {
 	w := NewWord("aB")
@@ -35,5 +37,64 @@ func TestIsEmpty(t *testing.T) {
 	w = NewWord("0")
 	if !w.IsEmpty() {
 		t.Error("Word 0 should be empty")
+	}
+}
+
+func TestReplace1(t *testing.T) {
+	w := NewWord("aB")
+	initial, _ := NewSimbol("B")
+	simbolList := []Simbol{}
+	for _, s := range []string{"d", "F"} {
+		simb, _ := NewSimbol(s)
+		simbolList = append(simbolList, simb)
+	}
+
+	w.Replace(initial, simbolList)
+	if len(w.Simbols) != 3 {
+		t.Error("Should replace simbols correctly")
+	}
+
+	if w.ToString() != "adF" {
+		t.Error("Word should be adF")
+	}
+}
+
+func TestReplace2(t *testing.T) {
+	w := NewWord("aBc")
+	initial, _ := NewSimbol("B")
+	simbolList := []Simbol{}
+	for _, s := range []string{"d", "F"} {
+		simb, _ := NewSimbol(s)
+		simbolList = append(simbolList, simb)
+	}
+
+	w.Replace(initial, simbolList)
+	if len(w.Simbols) != 4 {
+		t.Error("Should replace simbols correctly")
+	}
+
+	if w.ToString() != "adFc" {
+		t.Error("Word should be adFc")
+		t.Log(w.ToString())
+	}
+}
+
+func TestReplace3(t *testing.T) {
+	w := NewWord("aaB")
+	initial, _ := NewSimbol("a")
+	simbolList := []Simbol{}
+	for _, s := range []string{"e", "e"} {
+		simb, _ := NewSimbol(s)
+		simbolList = append(simbolList, simb)
+	}
+
+	w.Replace(initial, simbolList)
+	if len(w.Simbols) != 5 {
+		t.Error("Should replace simbols correctly")
+	}
+
+	if w.ToString() != "eeeeB" {
+		t.Error("Word should be eeeeB")
+		t.Log(w.ToString())
 	}
 }

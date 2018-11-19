@@ -70,3 +70,21 @@ func (w *Word) ToString() string {
 func (w *Word) IsEmpty() bool {
 	return !w.ContainVariable() && !w.ContainTerminal()
 }
+
+// Replace should mutate the original word replacing the original simbol:first param
+// for the new simbols:second param
+func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) {
+	var newWord string
+	for _, simbol := range newSimbols {
+		newWord += simbol.Value
+	}
+
+	newString := strings.Replace(
+		w.ToString(),
+		originalSimbol.Value,
+		newWord,
+		-1,
+	)
+
+	w.Simbols = NewWord(newString).Simbols
+}
