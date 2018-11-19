@@ -88,3 +88,13 @@ func (w *Word) Replace(originalSimbol Simbol, newSimbols []Simbol) {
 
 	w.Simbols = NewWord(newString).Simbols
 }
+
+// Contains should return if the word contains the simbol
+func (w *Word) Contains(simbol Simbol) bool {
+	for _, s := range w.Simbols {
+		if s == simbol {
+			return true
+		}
+	}
+	return false
+}
