@@ -54,3 +54,46 @@ func (a *Automato) Explain() {
 		fmt.Printf("%s -> %s\n", simbol.Value, strings.Join(explainedWords, " | "))
 	}
 }
+
+// Fix should correct minor bugs, like
+// Trim 'empty simbols' from words with other simbols
+// eg: A -> a0, should be A -> a0
+// and remove duplicated words in same expression
+func Fix(a Automato) Automato {
+	emptyTrimmedAt := trimEmpty(a)
+	singularAt := removeDuplicate(emptyTrimmedAt)
+	return singularAt
+}
+
+func removeDuplicate(a Automato) Automato {
+	newAt := a
+	for simbol, words := range a.Expressions {
+		uniqueMap := make(map[string]string)
+		for _, word := range words {
+			str := word.ToString()
+			uniqueMap[str] = str
+		}
+
+		uniqueWords := []Word{}
+		for _, value := range uniqueMap {
+			uniqueWords = append(uniqueWords, NewWord(value))
+		}
+		newAt.Expressions[simbol] = uniqueWords
+	}
+	return newAt
+}
+
+func trimEmpty(a Automato) Automato {
+	newAt := a
+	for simbol, words := range a.Expressions {
+		wordList := []Word{}
+		for _, word := range words {
+			newStr := word.ToString()
+			splitedStr := strings.Split(newStr, "0")
+			newStr = strings.Join(splitedStr, "")
+			wordList = append(wordList, NewWord(newStr))
+		}
+		newAt.Expressions[simbol] = wordList
+	}
+	return newAt
+}

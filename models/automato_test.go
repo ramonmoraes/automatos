@@ -19,3 +19,12 @@ func TestCreateExpression(t *testing.T) {
 	}
 
 }
+
+func TestFix(t *testing.T) {
+	at := NewAutomato([]string{
+		"A -> a | a | a",
+		"B -> b00",
+	})
+	newAt := Fix(at)
+	newAt.Explain()
+}
