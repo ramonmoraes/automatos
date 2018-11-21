@@ -8,6 +8,12 @@ import (
 
 // RemoveEmptyProductions should remove every expression that generates empty word
 func RemoveEmptyProductions(automato models.Automato) models.Automato {
+	atWithoutProductions := removeEmptyProductions(automato)
+	fixedAt := models.Fix(atWithoutProductions)
+	return fixedAt
+}
+
+func removeEmptyProductions(automato models.Automato) models.Automato {
 	nonEmptyProductions := make(map[models.Simbol][]models.Word)
 	emptyProductions := make(map[models.Simbol][]models.Word)
 
