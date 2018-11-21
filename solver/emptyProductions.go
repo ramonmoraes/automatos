@@ -64,7 +64,6 @@ func removeEmptyProductions(automato models.Automato) models.Automato {
 }
 
 func explain(words []models.Word) {
-	// fmt.Println("Explaining list of words")
 	for _, w := range words {
 		fmt.Println(w.ToString())
 	}
