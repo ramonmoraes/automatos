@@ -1,20 +1,19 @@
 package main
 
 import (
+	"fmt"
+
 	"./models"
+	"./solver"
 )
 
 func main() {
 	// at := models.NewAutomato([]string{"A -> aB | a", "B -> E", "E -> c | 0"})
-	at := models.NewAutomato([]string{"A -> aB | a", "B -> 0"})
-	// sim := at.GetPossibleCreatedsSimbols()
-	// fmt.Println(sim)
+	at := models.NewAutomato([]string{"A -> aB | a", "B -> C | 0", "C -> D", "D -> ff"})
+	fmt.Println("[Start]")
 	at.Explain()
-	// anotherAt := solver.UselessSimbol(at)
-	// fmt.Println(anotherAt)
-	// valList := []string{}
-	// for _, simbol := range sim {
-	// 	valList = append(valList, simbol.Value)
-	// }
-	// fmt.Println(valList)
+
+	chomAt := solver.Solve(at)
+	fmt.Println("[End]")
+	chomAt.Explain()
 }
