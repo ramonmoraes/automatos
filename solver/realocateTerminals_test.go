@@ -9,6 +9,18 @@ import (
 func TestRealocateTerminal(t *testing.T) {
 	at := models.NewAutomato([]string{"A -> Ff"})
 	at = RealocateTerminals(at)
+	if len(at.Expressions) != 2 {
+		t.Error("Should've generated two expressions")
+	}
+
+	at = models.NewAutomato([]string{
+		"A -> Cf",
+		"C -> hh",
+	})
+	at = RealocateTerminals(at)
+	if len(at.Expressions) != 4 {
+		t.Error("Should've generated four expressions")
+	}
 }
 
 func TestGenerateNewSimbol(t *testing.T) {
