@@ -6,6 +6,11 @@ import (
 	"../models"
 )
 
+func TestRealocateTerminal(t *testing.T) {
+	at := models.NewAutomato([]string{"A -> Ff"})
+	at = RealocateTerminals(at)
+}
+
 func TestGenerateNewSimbol(t *testing.T) {
 	at := models.NewAutomato([]string{"A -> Ff"})
 

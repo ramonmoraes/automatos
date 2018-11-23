@@ -12,17 +12,37 @@ import (
 
 // RealocateTerminals should generate Variables for Terminals
 func RealocateTerminals(a models.Automato) models.Automato {
-	varList := a.GetVariableList()
 	for _, words := range a.Expressions {
 		for _, word := range words {
 			if len(word.Simbols) > 1 && word.ContainTerminal() {
-				for _, wordSimbol := range word.Simbols {
-					if !wordSimbol.IsVariable {
-						newSimbol := GenerateNewSimbol(varList, wordSimbol)
-						fmt.Println(newSimbol)
-					}
-				}
+				return replaceWordForNewSimbol(a, word)
 			}
+		}
+	}
+	return a
+}
+
+func replaceWordForNewSimbol(a models.Automato, word models.Word) models.Automato {
+	for _, wordSimbol := range word.Simbols {
+		if !wordSimbol.IsVariable {
+			newSimbol := GenerateNewSimbol(a.GetVariableList(), wordSimbol)
+			replacedAt := replaceSimbol(
+				a,
+				wordSimbol,
+				[]models.Word{
+					models.Word{
+						Simbols: []models.Simbol{newSimbol},
+					},
+				},
+			)
+
+			replacedAt.Expressions[newSimbol] = []models.Word{
+				models.Word{
+					Simbols: []models.Simbol{wordSimbol},
+				},
+			}
+
+			return RealocateTerminals(replacedAt)
 		}
 	}
 	return a
