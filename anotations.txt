@@ -1,4 +1,5 @@
 https://www.youtube.com/watch?v=juo5WmTJn5E
+https://www.youtube.com/watch?v=FNPSlnj3Vt0 (example)
 http://www2.ic.uff.br/~ueverton/files/LF/aula06.pdf ( 6.5.1 6.5.2)
 
 BNF: Backus Naur Form
