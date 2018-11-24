@@ -1,6 +1,7 @@
 package solver
 
 import (
+	"fmt"
 	"testing"
 
 	"../models"
@@ -11,6 +12,7 @@ func TestRealocateTerminal(t *testing.T) {
 	at = RealocateTerminals(at)
 	if len(at.Expressions) != 2 {
 		t.Error("Should've generated two expressions")
+		at.Explain()
 	}
 
 	at = models.NewAutomato([]string{
@@ -21,6 +23,33 @@ func TestRealocateTerminal(t *testing.T) {
 	if len(at.Expressions) != 4 {
 		t.Error("Should've generated four expressions")
 	}
+}
+
+func TestReplaceFirstTerminalForNewSimbol(t *testing.T) {
+	at := models.NewAutomato([]string{"A -> Ff | c"})
+	for _, words := range at.Expressions {
+		at = ReplaceFirstTerminalForNewSimbol(at, words[0])
+	}
+	for simbol, words := range at.Expressions {
+		if simbol.Value == "A" && words[0].Simbols[1].Value == "f" {
+			t.Error("Should've changed 'f' terminal")
+		}
+	}
+}
+
+func TestComplexReplace(t *testing.T) {
+	at := models.NewAutomato([]string{
+		"S -> ASA | ab | a",
+		"A -> b | S",
+	})
+	fmt.Println("[Start]")
+
+	at = RealocateTerminals(at)
+	if len(at.Expressions) != 4 {
+		t.Error("Should've generated four expressions")
+		at.Explain()
+	}
+	fmt.Println("[End]")
 }
 
 func TestGenerateNewSimbol(t *testing.T) {

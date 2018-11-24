@@ -1,7 +1,6 @@
 package solver
 
 import (
-	"fmt"
 	"log"
 	"math/rand"
 	"strings"
@@ -13,20 +12,67 @@ import (
 // RealocateTerminals should generate Variables for Terminals
 func RealocateTerminals(a models.Automato) models.Automato {
 	for _, words := range a.Expressions {
+		// if len(words) > 1 {
 		for _, word := range words {
-			if len(word.Simbols) > 1 && word.ContainTerminal() {
-				return replaceWordForNewSimbol(a, word)
+			if len(word.Simbols) > 1 {
+				if word.ContainTerminal() {
+					return ReplaceFirstTerminalForNewSimbol(a, word)
+				}
 			}
 		}
+		// }
 	}
 	return a
 }
 
+// ReplaceFirstTerminalForNewSimbol should replace every simbol a automato for another simbol
+func ReplaceFirstTerminalForNewSimbol(a models.Automato, wordContainingTerminal models.Word) models.Automato {
+	var firstTerminal models.Simbol
+	for _, simbol := range wordContainingTerminal.Simbols {
+		if !simbol.IsVariable {
+			firstTerminal = simbol
+			break
+		}
+	}
+
+	newSimbol := GenerateNewSimbol(a.GetVariableList(), firstTerminal)
+	replacedAt := replaceSimbols(a, firstTerminal, newSimbol)
+	replacedAt.Expressions[newSimbol] = []models.Word{
+		models.Word{
+			Simbols: []models.Simbol{firstTerminal},
+		},
+	}
+	return RealocateTerminals(replacedAt)
+}
+
+func replaceSimbols(a models.Automato, toBeReplacedSimbol models.Simbol, newSimbol models.Simbol) models.Automato {
+	replacedAt := models.Automato{
+		Expressions: make(map[models.Simbol][]models.Word),
+	}
+
+	for simbol, words := range a.Expressions {
+		for _, word := range words {
+			wordString := word.ToString()
+			replacedString := strings.Replace(wordString, toBeReplacedSimbol.Value, newSimbol.Value, -1)
+			newWord := models.NewWord(replacedString)
+			_, ok := replacedAt.Expressions[simbol]
+			if ok {
+				replacedAt.Expressions[simbol] = append(replacedAt.Expressions[simbol], newWord)
+			} else {
+				replacedAt.Expressions[simbol] = []models.Word{newWord}
+			}
+		}
+	}
+
+	return replacedAt
+}
+
 func replaceWordForNewSimbol(a models.Automato, word models.Word) models.Automato {
+	replacedAt := models.Automato{}
 	for _, wordSimbol := range word.Simbols {
 		if !wordSimbol.IsVariable {
 			newSimbol := GenerateNewSimbol(a.GetVariableList(), wordSimbol)
-			replacedAt := replaceSimbol(
+			replacedAt = replaceSimbol(
 				a,
 				wordSimbol,
 				[]models.Word{
@@ -41,11 +87,9 @@ func replaceWordForNewSimbol(a models.Automato, word models.Word) models.Automat
 					Simbols: []models.Simbol{wordSimbol},
 				},
 			}
-
-			return RealocateTerminals(replacedAt)
 		}
 	}
-	return a
+	return RealocateTerminals(replacedAt)
 }
 
 // GenerateNewSimbol should return a non existing simbol, given the list of already existing simbols
@@ -72,8 +116,6 @@ func getRandomSimbol(varMap map[string]string) models.Simbol {
 	alpabetSize := len([]rune(alphabet))
 
 	randomPos := rand.Intn(alpabetSize)
-	fmt.Println(randomPos)
-
 	newSimbol, err := models.NewSimbol(strings.Split(alphabet, "")[randomPos])
 	if err != nil {
 		log.Fatal(err)
