@@ -23,5 +23,7 @@ func Chomsky(a models.Automato) models.Automato {
 	// fmt.Println("[After Realocating Terminals]")
 	// at.Explain()
 
+	at = RealocateVariables(at)
+
 	return at
 }
