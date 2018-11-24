@@ -65,31 +65,6 @@ func replaceSimbols(a models.Automato, toBeReplacedSimbol models.Simbol, newSimb
 	return replacedAt
 }
 
-func replaceWordForNewSimbol(a models.Automato, word models.Word) models.Automato {
-	replacedAt := models.Automato{}
-	for _, wordSimbol := range word.Simbols {
-		if !wordSimbol.IsVariable {
-			newSimbol := GenerateNewSimbol(a.GetVariableList(), wordSimbol)
-			replacedAt = replaceSimbol(
-				a,
-				wordSimbol,
-				[]models.Word{
-					models.Word{
-						Simbols: []models.Simbol{newSimbol},
-					},
-				},
-			)
-
-			replacedAt.Expressions[newSimbol] = []models.Word{
-				models.Word{
-					Simbols: []models.Simbol{wordSimbol},
-				},
-			}
-		}
-	}
-	return RealocateTerminals(replacedAt)
-}
-
 // GenerateNewSimbol should return a non existing simbol, given the list of already existing simbols
 func GenerateNewSimbol(existingVarialbes []models.Simbol, originatedTerminal models.Simbol) models.Simbol {
 	idealSimbol := strings.ToUpper(originatedTerminal.Value)
