@@ -65,6 +65,28 @@ func replaceSimbols(a models.Automato, toBeReplacedSimbol models.Simbol, newSimb
 	return replacedAt
 }
 
+func replaceStrings(a models.Automato, toBeReplacedString string, newString string) models.Automato {
+	replacedAt := models.Automato{
+		Expressions: make(map[models.Simbol][]models.Word),
+	}
+
+	for simbol, words := range a.Expressions {
+		for _, word := range words {
+			wordString := word.ToString()
+			replacedString := strings.Replace(wordString, toBeReplacedString, newString, -1)
+			newWord := models.NewWord(replacedString)
+			_, ok := replacedAt.Expressions[simbol]
+			if ok {
+				replacedAt.Expressions[simbol] = append(replacedAt.Expressions[simbol], newWord)
+			} else {
+				replacedAt.Expressions[simbol] = []models.Word{newWord}
+			}
+		}
+	}
+
+	return replacedAt
+}
+
 // GenerateNewSimbol should return a non existing simbol, given the list of already existing simbols
 func GenerateNewSimbol(existingVarialbes []models.Simbol, originatedTerminal models.Simbol) models.Simbol {
 	idealSimbol := strings.ToUpper(originatedTerminal.Value)
