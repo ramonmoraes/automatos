@@ -12,7 +12,6 @@ import (
 // RealocateTerminals should generate Variables for Terminals
 func RealocateTerminals(a models.Automato) models.Automato {
 	for _, words := range a.Expressions {
-		// if len(words) > 1 {
 		for _, word := range words {
 			if len(word.Simbols) > 1 {
 				if word.ContainTerminal() {
@@ -20,7 +19,6 @@ func RealocateTerminals(a models.Automato) models.Automato {
 				}
 			}
 		}
-		// }
 	}
 	return a
 }
