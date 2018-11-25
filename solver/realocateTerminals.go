@@ -13,10 +13,8 @@ import (
 func RealocateTerminals(a models.Automato) models.Automato {
 	for _, words := range a.Expressions {
 		for _, word := range words {
-			if len(word.Simbols) > 1 {
-				if word.ContainTerminal() {
-					return ReplaceFirstTerminalForNewSimbol(a, word)
-				}
+			if len(word.Simbols) > 1 && word.ContainTerminal() {
+				return ReplaceFirstTerminalForNewSimbol(a, word)
 			}
 		}
 	}
@@ -34,7 +32,8 @@ func ReplaceFirstTerminalForNewSimbol(a models.Automato, wordContainingTerminal 
 	}
 
 	newSimbol := GenerateNewSimbol(a.GetVariableList(), firstTerminal)
-	replacedAt := replaceSimbols(a, firstTerminal, newSimbol)
+	newStringWord := strings.Replace(wordContainingTerminal.ToString(), firstTerminal.Value, newSimbol.Value, 1)
+	replacedAt := replaceStrings(a, wordContainingTerminal.ToString(), newStringWord)
 	replacedAt.Expressions[newSimbol] = []models.Word{
 		models.Word{
 			Simbols: []models.Simbol{firstTerminal},

@@ -8,20 +8,11 @@ import (
 )
 
 func TestRealocateTerminal(t *testing.T) {
-	at := models.NewAutomato([]string{"A -> Ff"})
-	at = RealocateTerminals(at)
-	if len(at.Expressions) != 2 {
-		t.Error("Should've generated two expressions")
-		at.Explain()
-	}
+	at := models.NewAutomato([]string{"A -> Ff | b | cD"})
+	atModified := RealocateTerminals(at)
 
-	at = models.NewAutomato([]string{
-		"A -> Cf",
-		"C -> hh",
-	})
-	at = RealocateTerminals(at)
-	if len(at.Expressions) != 4 {
-		t.Error("Should've generated four expressions")
+	if len(atModified.Expressions) != 3 {
+		t.Error("Should have generated 3 expressions")
 	}
 }
 
