@@ -46,15 +46,21 @@ func getCombination(word models.Word, simbol models.Simbol) []models.Word {
 	var combinations []models.Word
 	binaryCombination := getBitSlice(len(equalValueIndices))
 	for _, bitNumber := range binaryCombination {
-		for bitIndice, bit := range bitNumber {
-			nw := word
-			if string(bit) == "0" {
-				nw.Simbols[equalValueIndices[bitIndice]].Value = "0"
-			}
-			combinations = append(combinations, nw)
-		}
+		nw := getCombinationBasedOnBinary(word, simbol, equalValueIndices, bitNumber)
+		combinations = append(combinations, nw)
 	}
 	return combinations
+}
+
+func getCombinationBasedOnBinary(word models.Word, simbol models.Simbol, equalValueIndices []int, binaryNumber string) models.Word {
+	nw := models.NewWord(word.ToString()) // Could not found a better way to not mutate word
+	for bitIndice, bit := range binaryNumber {
+		sx := equalValueIndices[bitIndice]
+		if string(bit) == "0" {
+			nw.Simbols[sx].Value = "0"
+		}
+	}
+	return nw
 }
 
 func getBitSlice(number int) []string {

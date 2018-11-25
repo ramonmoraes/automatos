@@ -70,5 +70,15 @@ func TestCombination(t *testing.T) {
 	simb, _ := models.NewSimbol("D")
 
 	comb := getCombination(word, simb)
-	explain(comb)
+	if len(comb) != 4 {
+		t.Error("Should have generated 4 combinations")
+	}
+
+	if comb[0].ToString() != "0C0" &&
+		comb[0].ToString() != "0CD" &&
+		comb[0].ToString() != "DC0" &&
+		comb[0].ToString() != "DCD" {
+		t.Error("Should generate correct combination")
+		explain(comb)
+	}
 }
