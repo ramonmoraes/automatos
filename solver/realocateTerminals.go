@@ -1,6 +1,7 @@
 package solver
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"strings"
@@ -32,6 +33,8 @@ func ReplaceFirstTerminalForNewSimbol(a models.Automato, wordContainingTerminal 
 	}
 
 	newSimbol := GenerateNewSimbol(a.GetVariableList(), firstTerminal)
+	newSimbol = checkingExistingSimbol(a, newSimbol, firstTerminal)
+
 	newStringWord := strings.Replace(wordContainingTerminal.ToString(), firstTerminal.Value, newSimbol.Value, 1)
 	replacedAt := replaceStrings(a, wordContainingTerminal.ToString(), newStringWord)
 	replacedAt.Expressions[newSimbol] = []models.Word{
@@ -113,6 +116,16 @@ func getRandomSimbol(varMap map[string]string) models.Simbol {
 	newSimbol, err := models.NewSimbol(strings.Split(alphabet, "")[randomPos])
 	if err != nil {
 		log.Fatal(err)
+	}
+	return newSimbol
+}
+
+func checkingExistingSimbol(a models.Automato, newSimbol models.Simbol, value models.Simbol) models.Simbol {
+	for simbol, words := range a.Expressions {
+		if len(words) == 1 && len(words[0].Simbols) == 1 && words[0].Simbols[0] == value {
+			fmt.Printf("Found :%s generating %s already\n", simbol.Value, value.Value)
+			return simbol
+		}
 	}
 	return newSimbol
 }
