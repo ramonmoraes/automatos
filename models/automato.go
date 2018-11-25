@@ -57,7 +57,7 @@ func (a *Automato) Explain() {
 
 // Fix should correct minor bugs, like
 // Trim 'empty simbols' from words with other simbols
-// eg: A -> a0, should be A -> a0
+// eg: A -> a0, should be A -> a
 // and remove duplicated words in same expression
 func Fix(a Automato) Automato {
 	emptyTrimmedAt := trimEmpty(a)
@@ -89,8 +89,10 @@ func trimEmpty(a Automato) Automato {
 		wordList := []Word{}
 		for _, word := range words {
 			newStr := word.ToString()
-			splitedStr := strings.Split(newStr, "0")
-			newStr = strings.Join(splitedStr, "")
+			if len(word.Simbols) > 1 {
+				splitedStr := strings.Split(newStr, "0")
+				newStr = strings.Join(splitedStr, "")
+			}
 			wordList = append(wordList, NewWord(newStr))
 		}
 		newAt.Expressions[simbol] = wordList
