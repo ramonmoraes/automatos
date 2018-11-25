@@ -1,29 +1,40 @@
 package solver
 
 import (
+	"fmt"
+
 	"../models"
 )
 
 // Solve should just return the chomsky form
-func Solve(a models.Automato) models.Automato {
-	return Chomsky(a)
+func Solve(a models.Automato, verbose bool) models.Automato {
+	return Chomsky(a, verbose)
 }
 
 // Chomsky should return a simplified automato
-func Chomsky(a models.Automato) models.Automato {
+func Chomsky(a models.Automato, verbose bool) models.Automato {
 	at := RemoveEmptyProductions(a) // null productions
-	// fmt.Println("[After Removing Empty Productions]")
-	// at.Explain()
+	if verbose {
+		fmt.Println("[After Removing Empty/Null Productions]")
+		at.Explain()
+	}
 
 	at = UselessSimbol(at) // unit productions
-	// fmt.Println("[After removing useless simbol]")
-	// at.Explain()
+	if verbose {
+		fmt.Println("[After removing useless simbol (unit productions)]")
+		at.Explain()
+	}
+	at = RealocateTerminals(at)
 
-	// at = RealocateTerminals(at)
-	// fmt.Println("[After Realocating Terminals]")
-	// at.Explain()
+	if verbose {
+		fmt.Println("[After Realocating Terminals]")
+		at.Explain()
+	}
 
-	// at = RealocateVariables(at)
-
-	return models.Fix(at)
+	at = RealocateVariables(at)
+	if verbose {
+		fmt.Println("[After Realocating Variables]")
+		at.Explain()
+	}
+	return at
 }
