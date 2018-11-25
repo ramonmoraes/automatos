@@ -1,7 +1,6 @@
 package solver
 
 import (
-	"fmt"
 	"strings"
 
 	"../models"
@@ -39,7 +38,6 @@ func splitWords(a models.Automato, word models.Word) models.Automato {
 		replacedAt = replaceStrings(a, s, newSimbol.Value)
 		newWord := models.NewWord(s)
 		replacedAt.Expressions[newSimbol] = []models.Word{newWord}
-		fmt.Printf("%s\n", s)
 	}
 	return RealocateVariables(replacedAt)
 }
