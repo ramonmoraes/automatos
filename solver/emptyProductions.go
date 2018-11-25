@@ -10,14 +10,13 @@ import (
 // RemoveEmptyProductions should remove every expression that generates empty word
 func RemoveEmptyProductions(automato models.Automato) models.Automato {
 	atWithoutProductions := removeEmptyProductions(automato)
-	fixedAt := models.Fix(atWithoutProductions)
-	return fixedAt
+	return atWithoutProductions
 }
 
 func removeEmptyProductions(automato models.Automato) models.Automato {
 	for simbol, words := range automato.Expressions {
 		for _, word := range words {
-			if word.IsEmpty() {
+			if word.IsEmpty() || word.ToString() == "0" {
 				return replaceEmptySimbolCombination(automato, simbol)
 			}
 		}
@@ -43,9 +42,10 @@ func replaceEmptySimbolCombination(automato models.Automato, simbolWithEmptyWord
 		at.Expressions[simbolIndex] = newWords
 	}
 	at.Expressions[simbolWithEmptyWord] = removeEmptyFrom(at.Expressions[simbolWithEmptyWord])
-	return removeEmptyProductions(at)
+	return removeEmptyProductions(models.Fix(at))
 }
 
+// aux
 func getCombination(word models.Word, simbol models.Simbol) []models.Word {
 	var equalValueIndices []int
 	for indice, simb := range word.Simbols {
@@ -78,12 +78,17 @@ func getBitSlice(number int) []string {
 	var bitSlice []string
 	i := 0
 	highestBitNumber := strconv.FormatInt(int64(number*number), 2)
-	padSize := len(highestBitNumber) - 1
+	padSize := len(highestBitNumber)
 	for i < number*number {
 		binValue := strconv.FormatInt(int64(i), 2)
 		bitString := fmt.Sprintf("%0*s", padSize, binValue)
-		bitSlice = append(bitSlice, bitString)
+		lessSigBits := bitString[padSize-number:]
+		bitSlice = append(bitSlice, lessSigBits)
 		i = i + 1
+	}
+
+	if number == 1 {
+		return []string{"0", "1"}
 	}
 	return bitSlice
 }

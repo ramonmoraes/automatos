@@ -25,6 +25,28 @@ func TestRemoveSimpleEmptyProduction(t *testing.T) {
 	}
 }
 
+func TestRemoveEmptyProduction(t *testing.T) {
+	at := models.NewAutomato([]string{
+		"S -> ASA | aB",
+		"A -> B | S",
+		"B -> b | 0",
+	})
+	atModified := RemoveEmptyProductions(at)
+	for simbol, words := range atModified.Expressions {
+		if simbol.Value == "S" && len(words) != 6 {
+			t.Error("'S' should have generated 6 words")
+		}
+
+		if simbol.Value == "A" && len(words) != 2 {
+			t.Error("'A' should have generated 2 words")
+		}
+
+		if simbol.Value == "B" && len(words) != 1 {
+			t.Error("'B' should have generated 1 words")
+		}
+	}
+}
+
 func TestCombination(t *testing.T) {
 	word := models.NewWord("DCD")
 	simb, _ := models.NewSimbol("D")
@@ -59,5 +81,12 @@ func TestRemoveEmptyFrom(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+func TestGetBitSlice(t *testing.T) {
+	bs := getBitSlice(4)
+	if bs[0] != "0000" && bs[len(bs)-1] != "1111" {
+		t.Error("Should give correct binary table")
 	}
 }
