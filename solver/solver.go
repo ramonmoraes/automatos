@@ -19,11 +19,11 @@ func Chomsky(a models.Automato) models.Automato {
 	// fmt.Println("[After removing useless simbol]")
 	// at.Explain()
 
-	at = RealocateTerminals(at)
+	// at = RealocateTerminals(at)
 	// fmt.Println("[After Realocating Terminals]")
 	// at.Explain()
 
-	at = RealocateVariables(at)
+	// at = RealocateVariables(at)
 
-	return at
+	return models.Fix(at)
 }
