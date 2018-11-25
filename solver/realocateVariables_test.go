@@ -12,5 +12,7 @@ func TestRealocateVariables(t *testing.T) {
 	})
 
 	at = RealocateVariables(at)
-	at.Explain()
+	if len(at.Expressions) != 3 {
+		t.Error("Should have generated 3 expressions")
+	}
 }
