@@ -1,66 +1,26 @@
 package solver
 
 import (
+	"fmt"
 	"testing"
 
 	"../models"
 )
 
 func TestRemoveSimpleEmptyProduction(t *testing.T) {
-	at := models.NewAutomato([]string{"A -> a | B", "B -> 0"})
-	atModified := RemoveEmptyProductions(at)
-	if len(atModified.Expressions) != 1 {
-		t.Error("Automato should have only one expression")
-	}
-	atModified.Explain()
-}
-
-func TestRemoveDoubleEmptyProduction(t *testing.T) {
-	at := models.NewAutomato([]string{"A -> a|B", "B -> c | 0"})
-	atModified := RemoveEmptyProductions(at)
-
-	if len(atModified.Expressions) != 1 {
-		t.Error("Automato should have appended B content on A variable")
-	}
-
-	for _, words := range atModified.Expressions {
-		if len(words) != 2 {
-			t.Error("Automato should have generated two words")
-		}
-		if words[0].ToString() != "a" || words[1].ToString() != "c" {
-			t.Error("Automato should have words 'a' and 'c'")
-		}
-	}
-
-	atModified.Explain()
-}
-
-func TestRemoveComplex(t *testing.T) {
-	at := models.NewAutomato([]string{
-		"A -> B | aC",
-		"B -> d | C",
-		"C -> c | 0",
-	})
+	at := models.NewAutomato([]string{"A -> a | BaB", "B -> 0 | b"})
 	atModified := RemoveEmptyProductions(at)
 	if len(atModified.Expressions) != 2 {
 		t.Error("Automato should have two expressions")
 	}
 
-	for Simbol, words := range atModified.Expressions {
-		if Simbol.Value == "A" {
-			if words[0].ToString() != "a" &&
-				words[1].ToString() != "B" &&
-				words[1].ToString() != "ac" {
-				t.Error("Automato should have words 'a' and 'B' and 'ac'")
-				atModified.Explain()
-			}
+	for simb, words := range atModified.Expressions {
+		if simb.Value == "A" && len(words) != 4 {
+			t.Error("A -> Should have generated 4 words")
 		}
-		if Simbol.Value == "B" {
-			if words[0].ToString() != "d" &&
-				words[1].ToString() != "c" {
-				t.Error("Automato should have words 'c' and 'd'")
-				atModified.Explain()
-			}
+
+		if simb.Value == "B" && len(words) != 1 {
+			t.Error("B -> Should have generated 1 word")
 		}
 	}
 }
@@ -80,5 +40,24 @@ func TestCombination(t *testing.T) {
 		comb[0].ToString() != "DCD" {
 		t.Error("Should generate correct combination")
 		explain(comb)
+	}
+}
+
+func TestRemoveEmptyFrom(t *testing.T) {
+	at := models.NewAutomato([]string{
+		"A -> B | 0",
+		"B -> b | 0",
+	})
+
+	for _, words := range at.Expressions {
+		nw := removeEmptyFrom(words)
+		for _, w := range nw {
+			for _, simbol := range w.Simbols {
+				if simbol.IsEmpty {
+					t.Error("Should not have any empty")
+					fmt.Println(w.ToString())
+				}
+			}
+		}
 	}
 }

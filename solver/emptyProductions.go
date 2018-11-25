@@ -26,18 +26,29 @@ func removeEmptyProductions(automato models.Automato) models.Automato {
 	return automato
 }
 
-func replaceEmptySimbolCombination(automato models.Automato, simbolo models.Simbol) models.Automato {
-	// for _, words := range automato.Expressions {
-	// 	for _, word := range words {
-	// 	}
-	// }
-	return automato
+func replaceEmptySimbolCombination(automato models.Automato, simbolWithEmptyWord models.Simbol) models.Automato {
+	at := automato
+	for simbolIndex, words := range automato.Expressions {
+		var newWords []models.Word
+		for _, word := range words {
+			for _, wordSimbol := range word.Simbols {
+				if wordSimbol == simbolWithEmptyWord {
+					combinations := getCombination(word, simbolWithEmptyWord)
+					newWords = append(newWords, combinations...)
+				} else {
+					newWords = append(newWords, word)
+				}
+			}
+		}
+		at.Expressions[simbolIndex] = newWords
+	}
+	at.Expressions[simbolWithEmptyWord] = removeEmptyFrom(at.Expressions[simbolWithEmptyWord])
+	return removeEmptyProductions(at)
 }
 
 func getCombination(word models.Word, simbol models.Simbol) []models.Word {
-	varList := word.GetVariables()
 	var equalValueIndices []int
-	for indice, simb := range varList {
+	for indice, simb := range word.Simbols {
 		if simb.Value == simbol.Value {
 			equalValueIndices = append(equalValueIndices, indice)
 		}
@@ -53,7 +64,7 @@ func getCombination(word models.Word, simbol models.Simbol) []models.Word {
 }
 
 func getCombinationBasedOnBinary(word models.Word, simbol models.Simbol, equalValueIndices []int, binaryNumber string) models.Word {
-	nw := models.NewWord(word.ToString()) // Could not found a better way to not mutate word
+	nw := models.NewWord(word.ToString()) // Could not find a better way to not mutate word
 	for bitIndice, bit := range binaryNumber {
 		sx := equalValueIndices[bitIndice]
 		if string(bit) == "0" {
@@ -75,6 +86,16 @@ func getBitSlice(number int) []string {
 		i = i + 1
 	}
 	return bitSlice
+}
+
+func removeEmptyFrom(words []models.Word) []models.Word {
+	var nw []models.Word
+	for _, w := range words {
+		if !w.IsEmpty() {
+			nw = append(nw, w)
+		}
+	}
+	return nw
 }
 
 func explain(words []models.Word) {
