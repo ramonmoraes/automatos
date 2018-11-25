@@ -64,3 +64,11 @@ func TestRemoveComplex(t *testing.T) {
 		}
 	}
 }
+
+func TestCombination(t *testing.T) {
+	word := models.NewWord("DCD")
+	simb, _ := models.NewSimbol("D")
+
+	comb := getCombination(word, simb)
+	explain(comb)
+}
