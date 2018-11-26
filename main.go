@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	print("\033[H\033[2J") // clean console
 	// at := models.NewAutomato([]string{
 	// 	"S -> ASA | aB ",
 	// 	"A -> B | S",
@@ -15,9 +16,9 @@ func main() {
 	// })
 
 	at := models.NewAutomato([]string{
-		"S -> aX | bY | b",
-		"X -> x | 0 | d",
-		"Y -> y | 0",
+		"A -> xB | B",
+		"B -> fC | 0",
+		"C -> C | g | 0",
 	})
 
 	fmt.Println("[Initial Automato]")
