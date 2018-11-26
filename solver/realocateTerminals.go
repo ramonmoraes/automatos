@@ -90,12 +90,13 @@ func replaceStrings(a models.Automato, toBeReplacedString string, newString stri
 }
 
 // GenerateNewSimbol should return a non existing simbol, given the list of already existing simbols
-func GenerateNewSimbol(existingVarialbes []models.Simbol, originatedTerminal models.Simbol) models.Simbol {
+func GenerateNewSimbol(existingVariables []models.Simbol, originatedTerminal models.Simbol) models.Simbol {
 	idealSimbol := strings.ToUpper(originatedTerminal.Value)
 	varMap := make(map[string]string)
-	for _, v := range existingVarialbes {
+	for _, v := range existingVariables {
 		varMap[v.Value] = v.Value
 	}
+
 	_, alreadyExist := varMap[idealSimbol]
 	if alreadyExist {
 		return getRandomSimbol(varMap)
