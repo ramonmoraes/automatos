@@ -69,7 +69,8 @@ or
   ./automatos -example
 ```
 
-Obs: O comando build ira compilar para o SO em que o comando foi executado, caso queira compilar para outro SO:
+### Obs
+O comando build ira compilar para o SO em que o comando foi executado, caso queira compilar para outro SO:
 
 ```bash
 $ export GOOS={ windows | linux  | ... }
