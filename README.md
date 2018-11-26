@@ -25,7 +25,7 @@ expressionList := []string{
 newAutomato := models.NewAutomato(expressionList)
 ```
 ## Resolvendo
-Ja para rodar a transformação para forma de chomsky, basta passar o automato como argumento para a função `solver.Solve`, que retorna um novo `automato` na forma de Chomsky, eg:
+Ja para rodar a transformação para forma de chomsky, basta passar o automato como argumento para a função `solver.Solve`, que retorna um novo `automato` na forma de Chomsky, e.g:
 
 ```golang
 chomskyAutomato := solver.Solve(oldAutomato, false)
@@ -33,7 +33,7 @@ chomskyAutomato := solver.Solve(oldAutomato, false)
 
 ## Mostrando os resultados
 Basta chamar o `.Explain` de um `automato`
-eg:
+e.g:
 ```golang
 chomskyAutomato.Explain()
 ```
@@ -58,7 +58,7 @@ $ ./automatos
  - `-example` : Irá rodar o example pre-determinado no codigo
  - `-verbose` : Irá chamar `Explain` para cada parte do algoritmo
 
-eg:
+e.g:
 ```bash
   $ go run -example -verbose
 ```
