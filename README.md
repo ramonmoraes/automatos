@@ -53,6 +53,21 @@ Compilar e executar:
 $ go build
 $ ./automatos
 ```
+### Flags
+
+ - `-example` : Irá rodar o example pre-determinado no codigo
+ - `-verbose` : Irá chamar `Explain` para cada parte do algoritmo
+
+eg:
+```bash
+  $ go run -example -verbose
+```
+or
+
+```bash
+  $ go build
+  ./automatos -example
+```
 
 Obs: O comando build ira compilar para o SO em que o comando foi executado, caso queira compilar para outro SO:
 
