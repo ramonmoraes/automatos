@@ -19,26 +19,35 @@ func main() {
 	if *runExample {
 		example(*verbose)
 	} else {
-		var atExpressions []string
-		var inputText string
-		fmt.Println("Write expressions:")
-
-		for inputText != "\n" {
-			reader := bufio.NewReader(os.Stdin)
-			inputText, _ = reader.ReadString('\n')
-			if inputText != "\n" {
-				atExpressions = append(atExpressions, inputText)
-			}
-		}
-
-		fmt.Println("[Initial Automato]")
-		at := models.NewAutomato(atExpressions)
-		at.Explain()
-
-		fmt.Println("[End Automato]")
-		chomAt := solver.Solve(at, *verbose)
-		chomAt.Explain()
+		input(*verbose)
 	}
+}
+
+func input(verbose bool) {
+	var atExpressions []string
+	var inputText string
+	fmt.Println("Input disclaimers:")
+	fmt.Println("1 - The program will start runing after ocurring a empty input")
+	fmt.Printf("2 - The automato should follow this pattern:\n    X -> a | B\n    B -> c\n")
+	fmt.Println("3 - The program will not consider S as the 'start' argument, the first one will be considered the start instead")
+	fmt.Println("4 - The alphabet have to respect the range between 'a' to 'Z'")
+	fmt.Println("5 - Numbers are invalid, except '0' which represents 'empty'")
+	fmt.Println("Waiting for input...")
+	for inputText != "\n" {
+		reader := bufio.NewReader(os.Stdin)
+		inputText, _ = reader.ReadString('\n')
+		if inputText != "\n" {
+			atExpressions = append(atExpressions, inputText)
+		}
+	}
+
+	fmt.Println("[Initial Automato]")
+	at := models.NewAutomato(atExpressions)
+	at.Explain()
+
+	fmt.Println("[End Automato]")
+	chomAt := solver.Solve(at, verbose)
+	chomAt.Explain()
 }
 
 func example(verbose bool) {
